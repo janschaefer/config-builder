@@ -1,0 +1,10 @@
+com.tngtech.configbuilder
+com.tngtech.configbuilder.annotation.configuration
+com.tngtech.configbuilder.annotation.propertyloaderconfiguration
+com.tngtech.configbuilder.annotation.validation
+com.tngtech.configbuilder.annotation.valueextractor
+com.tngtech.configbuilder.annotation.valuetransformer
+com.tngtech.configbuilder.configuration
+com.tngtech.configbuilder.exception
+com.tngtech.configbuilder.testclasses
+com.tngtech.configbuilder.util
