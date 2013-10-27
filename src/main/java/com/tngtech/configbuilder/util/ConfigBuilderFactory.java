@@ -1,6 +1,5 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Maps;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertiesFilesProcessor;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertyExtensionProcessor;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertyLocationsProcessor;
@@ -9,15 +8,16 @@ import com.tngtech.configbuilder.annotation.valueextractor.*;
 import com.tngtech.configbuilder.annotation.valuetransformer.ValueTransformerProcessor;
 import com.tngtech.configbuilder.configuration.BuilderConfiguration;
 import com.tngtech.configbuilder.configuration.ErrorMessageSetup;
-import com.tngtech.configbuilder.util.*;
 
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class ConfigBuilderFactory {
 
-    private Map<Class,Object> singletonMap = Maps.newHashMap();
+    private Map<Class<?>,Object> singletonMap = new HashMap<Class<?>,Object>();
 
     public <T> void initialize() {
         ErrorMessageSetup errorMessageSetup = new ErrorMessageSetup();
@@ -50,6 +50,7 @@ public class ConfigBuilderFactory {
         singletonMap.put(DefaultValueProcessor.class, new DefaultValueProcessor());
     }
 
+    @SuppressWarnings("unchecked")
     public <K> K getInstance(Class<K> clazz) {
         return (K)singletonMap.get(clazz);
     }
@@ -57,9 +58,11 @@ public class ConfigBuilderFactory {
     public <K> K createInstance(Class<K> clazz) {
         try {
             return clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
             throw new RuntimeException(e);
-        }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } 
     }
 
     public ValidatorFactory getValidatorFactory() {

@@ -1,9 +1,9 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.*;
 import com.tngtech.configbuilder.testclasses.TestConfig;
 import com.tngtech.propertyloader.PropertyLoader;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +41,7 @@ public class PropertyLoaderConfiguratorTest {
     public void setUp() throws Exception {
         propertyLoaderConfigurator = new PropertyLoaderConfigurator(annotationHelper, configBuilderFactory);
 
-        List<Annotation> annotationList = Lists.newArrayList(propertySuffixes, propertyLocations);
+        List<Annotation> annotationList = Arrays.asList(propertySuffixes, propertyLocations);
         when(annotationHelper.getAnnotationsAnnotatedWith(TestConfig.class.getDeclaredAnnotations(), PropertyLoaderConfigurationAnnotation.class)).thenReturn(annotationList);
         when(configBuilderFactory.getInstance(PropertyLocationsProcessor.class)).thenReturn(propertyLocationsProcessor);
         when(configBuilderFactory.getInstance(PropertySuffixProcessor.class)).thenReturn(propertySuffixProcessor);

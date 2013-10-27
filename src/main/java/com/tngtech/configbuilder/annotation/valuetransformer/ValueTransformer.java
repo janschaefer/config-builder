@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValueTransformer {
-    public Class<? extends FieldValueProvider> value();
+    public Class<? extends FieldValueProvider<?>> value();
 }

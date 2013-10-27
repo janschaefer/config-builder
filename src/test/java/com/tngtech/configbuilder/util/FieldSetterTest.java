@@ -64,7 +64,7 @@ public class FieldSetterTest {
         when(fieldValueExtractor.extractValue(Matchers.any(Field.class), Matchers.any(BuilderConfiguration.class))).thenReturn(null);
         when(errorMessageSetup.getErrorMessage(Matchers.any(IllegalArgumentException.class), Matchers.any(String.class), Matchers.any(String.class), Matchers.any(String.class))).thenReturn("IllegalArgumentException");
 
-        FieldSetter<TestConfigForIllegalArgumentException> fieldSetter = new FieldSetter<>(fieldValueExtractor, errorMessageSetup, annotationHelper);
+        FieldSetter<TestConfigForIllegalArgumentException> fieldSetter = new FieldSetter<TestConfigForIllegalArgumentException>(fieldValueExtractor, errorMessageSetup, annotationHelper);
         TestConfigForIllegalArgumentException testConfigForIllegalArgumentException = new TestConfigForIllegalArgumentException();
 
         expectedException.expect(ConfigBuilderException.class);
@@ -77,7 +77,7 @@ public class FieldSetterTest {
     public void testSetFields() throws Exception {
         when(fieldValueExtractor.extractValue(Matchers.any(Field.class), Matchers.any(BuilderConfiguration.class))).thenReturn("stringValue");
 
-        FieldSetter<TestConfig> fieldSetter = new FieldSetter<>(fieldValueExtractor, errorMessageSetup, annotationHelper);
+        FieldSetter<TestConfig> fieldSetter = new FieldSetter<TestConfig>(fieldValueExtractor, errorMessageSetup, annotationHelper);
         TestConfig testConfig = new TestConfig();
 
         fieldSetter.setFields(testConfig, builderConfiguration);
@@ -91,7 +91,7 @@ public class FieldSetterTest {
     public void testSetEmptyFields() throws Exception {
         when(fieldValueExtractor.extractValue(Matchers.any(Field.class), Matchers.any(BuilderConfiguration.class))).thenReturn("stringValue");
 
-        FieldSetter<TestConfig> fieldSetter = new FieldSetter<>(fieldValueExtractor, errorMessageSetup, annotationHelper);
+        FieldSetter<TestConfig> fieldSetter = new FieldSetter<TestConfig>(fieldValueExtractor, errorMessageSetup, annotationHelper);
         TestConfig testConfig = new TestConfig();
 
         fieldSetter.setEmptyFields(testConfig, builderConfiguration);
@@ -105,7 +105,7 @@ public class FieldSetterTest {
         when(fieldValueExtractor.extractValue(Matchers.any(Field.class), Matchers.any(BuilderConfiguration.class))).thenReturn(null);
         when(annotationHelper.fieldHasAnnotationAnnotatedWith(Matchers.any(Field.class), Matchers.any(Class.class))).thenReturn(false);
 
-        FieldSetter<TestConfigWithoutAnnotations> fieldSetter = new FieldSetter<>(fieldValueExtractor, errorMessageSetup, annotationHelper);
+        FieldSetter<TestConfigWithoutAnnotations> fieldSetter = new FieldSetter<TestConfigWithoutAnnotations>(fieldValueExtractor, errorMessageSetup, annotationHelper);
         TestConfigWithoutAnnotations testConfigWithoutAnnotations = new TestConfigWithoutAnnotations();
 
         fieldSetter.setFields(testConfigWithoutAnnotations, builderConfiguration);

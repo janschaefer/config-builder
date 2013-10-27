@@ -1,10 +1,8 @@
 package com.tngtech.configbuilder.exception;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
-
 import javax.validation.ConstraintViolation;
+
+import java.util.HashSet;
 import java.util.Set;
 
 public class ValidatorException extends RuntimeException {
@@ -13,12 +11,7 @@ public class ValidatorException extends RuntimeException {
 
     public <T> ValidatorException(String message, Set<ConstraintViolation<T>> constraintViolations) {
         super(message);
-        this.constraintViolations = Sets.newHashSet(Iterables.transform(constraintViolations, new Function<ConstraintViolation<T>, ConstraintViolation>() {
-            @Override
-            public ConstraintViolation apply(ConstraintViolation<T> constraintViolation) {
-                return constraintViolation;
-            }
-        }));
+        this.constraintViolations = new HashSet<ConstraintViolation>(constraintViolations); 
     }
 
     public ValidatorException(String message, Throwable e) {

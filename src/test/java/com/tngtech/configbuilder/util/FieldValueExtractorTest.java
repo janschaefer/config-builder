@@ -1,6 +1,5 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.FieldValueProvider;
 import com.tngtech.configbuilder.annotation.configuration.CollectionType;
 import com.tngtech.configbuilder.annotation.configuration.LoadingOrder;
@@ -8,6 +7,7 @@ import com.tngtech.configbuilder.annotation.valueextractor.*;
 import com.tngtech.configbuilder.annotation.valuetransformer.ValueTransformer;
 import com.tngtech.configbuilder.annotation.valuetransformer.ValueTransformerProcessor;
 import com.tngtech.configbuilder.configuration.BuilderConfiguration;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class FieldValueExtractorTest {
         when(configBuilderFactory.getInstance(DefaultValueProcessor.class)).thenReturn(defaultValueProcessor);
         when(configBuilderFactory.getInstance(ValueTransformerProcessor.class)).thenReturn(valueTransformerProcessor);
 
-        when(annotationHelper.getAnnotationsAnnotatedWith(Matchers.any(Annotation[].class), Matchers.any(Class.class))).thenReturn(Lists.newArrayList((Annotation) valueTransformer));
+        when(annotationHelper.getAnnotationsAnnotatedWith(Matchers.any(Annotation[].class), Matchers.any(Class.class))).thenReturn(Arrays.asList((Annotation) valueTransformer));
         when(valueTransformer.annotationType()).thenReturn((Class) ValueTransformer.class);
 
         when(propertyValueProcessor.getValue(Matchers.any(PropertyValue.class), Matchers.any(BuilderConfiguration.class))).thenReturn("propertyValue");
@@ -109,7 +110,7 @@ public class FieldValueExtractorTest {
         PropertyValue propertyValue = field.getAnnotation(PropertyValue.class);
         CommandLineValue commandLineValue = field.getAnnotation(CommandLineValue.class);
 
-        List<Annotation> orderList = Lists.newArrayList(propertyValue, commandLineValue);
+        List<Annotation> orderList = Arrays.asList(propertyValue, commandLineValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         String result = (String) fieldValueExtractor.extractValue(field, builderConfiguration);
@@ -124,7 +125,7 @@ public class FieldValueExtractorTest {
         PropertyValue propertyValue = field.getAnnotation(PropertyValue.class);
         CommandLineValue commandLineValue = field.getAnnotation(CommandLineValue.class);
 
-        List<Annotation> orderList = Lists.newArrayList(commandLineValue, propertyValue);
+        List<Annotation> orderList = Arrays.asList(commandLineValue, propertyValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         order = new Class[]{CommandLineValue.class, PropertyValue.class};
@@ -140,7 +141,7 @@ public class FieldValueExtractorTest {
 
         PropertyValue propertyValue = field.getAnnotation(PropertyValue.class);
         CommandLineValue commandLineValue = field.getAnnotation(CommandLineValue.class);
-        List<Annotation> orderList = Lists.newArrayList(propertyValue, commandLineValue);
+        List<Annotation> orderList = Arrays.asList(propertyValue, commandLineValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         when(propertyValueProcessor.getValue(Matchers.any(PropertyValue.class), Matchers.any(BuilderConfiguration.class))).thenReturn(null);
@@ -156,7 +157,7 @@ public class FieldValueExtractorTest {
         field = TestConfig.class.getDeclaredField("collectionField");
 
         DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
-        List<Annotation> orderList = Lists.newArrayList((Annotation) defaultValue);
+        List<Annotation> orderList = Arrays.asList((Annotation) defaultValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         when(defaultValueProcessor.getValue(Matchers.any(DefaultValue.class), Matchers.any(BuilderConfiguration.class))).thenReturn("value1,value2");
@@ -165,7 +166,7 @@ public class FieldValueExtractorTest {
 
         Object result = fieldValueExtractor.extractValue(field, builderConfiguration);
 
-        assertEquals(Lists.newArrayList("transformedValue1", "transformedValue2"), result);
+        assertEquals(Arrays.asList("transformedValue1", "transformedValue2"), result);
     }
 
     @Test
@@ -173,7 +174,7 @@ public class FieldValueExtractorTest {
         field = TestConfig.class.getDeclaredField("booleanField");
 
         DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
-        List<Annotation> orderList = Lists.newArrayList((Annotation) defaultValue);
+        List<Annotation> orderList = Arrays.asList((Annotation) defaultValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         when(defaultValueProcessor.getValue(Matchers.any(DefaultValue.class), Matchers.any(BuilderConfiguration.class))).thenReturn("true");
@@ -187,7 +188,7 @@ public class FieldValueExtractorTest {
         field = TestConfig.class.getDeclaredField("primitiveField");
 
         DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
-        List<Annotation> orderList = Lists.newArrayList((Annotation) defaultValue);
+        List<Annotation> orderList = Arrays.asList((Annotation) defaultValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         when(defaultValueProcessor.getValue(Matchers.any(DefaultValue.class), Matchers.any(BuilderConfiguration.class))).thenReturn("someString");
@@ -202,7 +203,7 @@ public class FieldValueExtractorTest {
         field = TestConfig.class.getDeclaredField("booleanField");
 
         DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
-        List<Annotation> orderList = Lists.newArrayList((Annotation) defaultValue);
+        List<Annotation> orderList = Arrays.asList((Annotation) defaultValue);
         when(annotationHelper.getAnnotationsInOrder(Matchers.any(Field.class), Matchers.any(Class[].class))).thenReturn(orderList);
 
         when(defaultValueProcessor.getValue(Matchers.any(DefaultValue.class), Matchers.any(BuilderConfiguration.class))).thenReturn("someString");

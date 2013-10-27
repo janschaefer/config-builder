@@ -1,6 +1,5 @@
 package com.tngtech.configbuilder.testclasses;
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.FieldValueProvider;
 import com.tngtech.configbuilder.annotation.configuration.CollectionType;
 import com.tngtech.configbuilder.annotation.configuration.LoadingOrder;
@@ -29,7 +28,7 @@ public class TestConfig {
 
     public static class PidFixFactory implements FieldValueProvider<Collection<String>> {
         public Collection<String> getValue(String optionValue) {
-            Collection<String> coll = Lists.newArrayList();
+            Collection<String> coll = new ArrayList<String>();
             coll.add(optionValue + " success");
             return coll;
         }

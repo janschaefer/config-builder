@@ -1,9 +1,9 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Sets;
 import com.tngtech.configbuilder.annotation.valueextractor.CommandLineValue;
 import com.tngtech.configbuilder.configuration.ErrorMessageSetup;
 import com.tngtech.configbuilder.exception.ConfigBuilderException;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Option;
@@ -16,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -52,7 +54,7 @@ public class CommandLineHelperTest {
     public void setUp() throws Exception {
         commandLineHelper = new CommandLineHelper(configBuilderFactory, annotationHelper, errorMessageSetup);
 
-        Set<Field> fields = Sets.newHashSet(TestConfig.class.getDeclaredFields());
+        Set<Field> fields = SetHelper.newHashSet((TestConfig.class.getDeclaredFields()));
         when(annotationHelper.getFieldsAnnotatedWith(TestConfig.class, CommandLineValue.class)).thenReturn(fields);
         when(parser.parse(options, args)).thenReturn(commandLine);
     }

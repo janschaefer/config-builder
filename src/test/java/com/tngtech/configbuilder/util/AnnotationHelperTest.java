@@ -1,12 +1,12 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.FieldValueProvider;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertyLoaderConfigurationAnnotation;
 import com.tngtech.configbuilder.annotation.valueextractor.CommandLineValue;
 import com.tngtech.configbuilder.annotation.valueextractor.PropertyValue;
 import com.tngtech.configbuilder.annotation.valueextractor.ValueExtractorAnnotation;
 import com.tngtech.configbuilder.annotation.valuetransformer.ValueTransformer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class AnnotationHelperTest {
 
     @Test
     public void testGetAnnotationsInOrder() throws Exception {
-        List<Annotation> orderList = Lists.newArrayList(field.getAnnotation(CommandLineValue.class), field.getAnnotation(PropertyValue.class));
+        List<Annotation> orderList = Arrays.asList(field.getAnnotation(CommandLineValue.class), field.getAnnotation(PropertyValue.class));
         List<Annotation> result = annotationHelper.getAnnotationsInOrder(field, annotationOrder);
         assertEquals(orderList, result);
     }

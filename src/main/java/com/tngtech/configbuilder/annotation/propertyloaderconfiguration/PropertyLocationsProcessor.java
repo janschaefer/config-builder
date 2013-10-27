@@ -13,8 +13,8 @@ public class PropertyLocationsProcessor implements IPropertyLoaderConfigurationP
         for (String location : locations) {
             propertyLoader.atDirectory(location);
         }
-        Class[] classes = ((PropertyLocations) annotation).resourcesForClasses();
-        for (Class clazz : classes) {
+        Class<?>[] classes = ((PropertyLocations) annotation).resourcesForClasses();
+        for (Class<?> clazz : classes) {
             propertyLoader.atRelativeToClass(clazz);
         }
         if (((PropertyLocations) annotation).fromClassLoader()) {

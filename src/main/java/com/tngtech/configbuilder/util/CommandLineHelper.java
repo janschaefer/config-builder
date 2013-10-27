@@ -22,13 +22,13 @@ public class CommandLineHelper {
         this.errorMessageSetup = errorMessageSetup;
     }
 
-    public CommandLine getCommandLine(Class configClass, String[] args) {
+    public CommandLine getCommandLine(Class<?> configClass, String[] args) {
         log.info("getting command line options from fields and parsing command line arguments");
         Options options = getOptions(configClass);
         return parseCommandLine(args, options);
     }
 
-    public Options getOptions(Class configClass) {
+    public Options getOptions(Class<?> configClass) {
         Options options = configBuilderFactory.createInstance(Options.class);
         for (Field field : annotationHelper.getFieldsAnnotatedWith(configClass, CommandLineValue.class)) {
             options.addOption(getOption(field));

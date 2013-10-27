@@ -1,14 +1,14 @@
 package com.tngtech.configbuilder.annotation.propertyloaderconfiguration;
 
 
-import com.google.common.collect.Lists;
 import com.tngtech.propertyloader.PropertyLoader;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 
 public class PropertiesFilesProcessor implements IPropertyLoaderConfigurationProcessor {
 
     public void configurePropertyLoader(Annotation annotation, PropertyLoader propertyLoader) {
-        propertyLoader.withBaseNames(Lists.newArrayList(((PropertiesFiles) annotation).value()));
+        propertyLoader.withBaseNames(Arrays.asList(((PropertiesFiles) annotation).value()));
     }
 }

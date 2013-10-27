@@ -1,6 +1,5 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.annotation.configuration.CollectionType;
 import com.tngtech.configbuilder.annotation.configuration.LoadingOrder;
 import com.tngtech.configbuilder.annotation.valueextractor.IValueExtractorProcessor;
@@ -9,12 +8,14 @@ import com.tngtech.configbuilder.annotation.valuetransformer.IValueTransformerPr
 import com.tngtech.configbuilder.annotation.valuetransformer.ValueTransformer;
 import com.tngtech.configbuilder.annotation.valuetransformer.ValueTransformerAnnotation;
 import com.tngtech.configbuilder.configuration.BuilderConfiguration;
+
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FieldValueExtractor {
@@ -43,7 +44,7 @@ public class FieldValueExtractor {
 
     private Object buildCollection(Field field, String[] values) {
         field.getGenericType();
-        List<Object> collection = Lists.newArrayList();
+        List<Object> collection = new ArrayList<Object>();
         for (String value : values) {
             collection.add(transformStringWithTransformer(field, value));
         }
@@ -73,7 +74,7 @@ public class FieldValueExtractor {
         for (Annotation annotation : annotationHelper.getAnnotationsAnnotatedWith(field.getDeclaredAnnotations(), ValueTransformerAnnotation.class)) {
             log.debug(String.format("transorming string value(s) for field %s with %s annotation", field.getName(), annotation.annotationType()));
             processorClass = annotation.annotationType().getAnnotation(ValueTransformerAnnotation.class).value();
-            IValueTransformerProcessor processor = (IValueTransformerProcessor) configBuilderFactory.getInstance(processorClass);
+            IValueTransformerProcessor<?> processor = (IValueTransformerProcessor<?>) configBuilderFactory.getInstance(processorClass);
             fieldValue = processor.transformString(annotation, value);
         }
         return fieldValue;

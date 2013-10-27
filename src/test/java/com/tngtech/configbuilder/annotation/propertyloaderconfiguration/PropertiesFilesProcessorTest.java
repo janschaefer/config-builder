@@ -1,7 +1,9 @@
 package com.tngtech.configbuilder.annotation.propertyloaderconfiguration;
 
-import com.google.common.collect.Lists;
+import java.util.Arrays;
+
 import com.tngtech.propertyloader.PropertyLoader;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +37,6 @@ public class PropertiesFilesProcessorTest {
 
         propertiesFilesProcessor.configurePropertyLoader(propertiesFiles, propertyLoader);
 
-        verify(propertyLoader).withBaseNames(Lists.newArrayList(fileNames));
+        verify(propertyLoader).withBaseNames(Arrays.asList(fileNames));
     }
 }

@@ -1,14 +1,15 @@
 package com.tngtech.configbuilder;
 
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.testclasses.TestConfig;
 import com.tngtech.configbuilder.testclasses.TestConfigWithoutDefaultConstructor;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -31,8 +32,8 @@ public class ConfigBuilderIntegrationTest {
         testConfig.setHelloWorld("Hello, World!");
         testConfig.setSomeNumber(3);
         testConfig.setBoolean(true);
-        testConfig.setStringCollection(Lists.newArrayList("PIDs fixed with success"));
-        testConfig.setList(Lists.newArrayList(new String[]{"one success"}, (new String[]{"two success"})));
+        testConfig.setStringCollection(Arrays.asList("PIDs fixed with success"));
+        testConfig.setList(new ArrayList(Arrays.asList(new String[]{"one success"}, new String[]{"two success"})));
         testConfig.setEnvironmentVariable(System.getenv("PATH"));
         testConfig.setSystemProperty(System.getProperty("user.language"));
 
@@ -54,7 +55,7 @@ public class ConfigBuilderIntegrationTest {
 
     @Test
     public void testConfigBuilderWithConstructorArgument() {
-        ConfigBuilder<TestConfigWithoutDefaultConstructor> configBuilder = new ConfigBuilder<>(TestConfigWithoutDefaultConstructor.class);
+        ConfigBuilder<TestConfigWithoutDefaultConstructor> configBuilder = new ConfigBuilder<TestConfigWithoutDefaultConstructor>(TestConfigWithoutDefaultConstructor.class);
         TestConfigWithoutDefaultConstructor c = configBuilder.build(3);
         assertEquals(3, c.getNumber());
     }
@@ -65,15 +66,15 @@ public class ConfigBuilderIntegrationTest {
         testConfig.setHelloWorld("HelloWorld!");
         testConfig.setSomeNumber(3);
         testConfig.setBoolean(true);
-        testConfig.setStringCollection(Lists.newArrayList("collection"));
-        testConfig.setList(Lists.newArrayList(new String[]{"one success"}, (new String[]{"two success"})));
+        testConfig.setStringCollection(Arrays.asList("collection"));
+        testConfig.setList(new ArrayList(Arrays.asList(new String[]{"one success"}, (new String[]{"two success"}))));
         testConfig.setEnvironmentVariable(System.getenv("PATH"));
         testConfig.setSystemProperty(System.getProperty("user.language"));
 
         TestConfig testConfig2 = new TestConfig();
         testConfig2.setHelloWorld("HelloWorld!");
         testConfig2.setBoolean(false);
-        testConfig2.setStringCollection(Lists.newArrayList("collection"));
+        testConfig2.setStringCollection(Arrays.asList("collection"));
 
         ConfigBuilder configBuilder = new ConfigBuilder(configClass);
         String[] args = new String[]{"-u", "--collection", "PIDs fixed with"};

@@ -1,6 +1,5 @@
 package com.tngtech.configbuilder.util;
 
-import com.google.common.collect.Sets;
 import com.tngtech.configbuilder.annotation.validation.Validation;
 import com.tngtech.configbuilder.configuration.ErrorMessageSetup;
 import com.tngtech.configbuilder.exception.ValidatorException;
@@ -54,7 +53,7 @@ public class ConfigValidatorTest {
     @Before
     public void setUp() throws Exception {
 
-        configValidator = new ConfigValidator<>(configBuilderFactory, errorMessageSetup, annotationHelper);
+        configValidator = new ConfigValidator<TestConfig>(configBuilderFactory, errorMessageSetup, annotationHelper);
         when(configBuilderFactory.getValidatorFactory()).thenReturn(validatorFactory);
         when(validatorFactory.getValidator()).thenReturn(validator);
     }
@@ -62,7 +61,7 @@ public class ConfigValidatorTest {
     @Test
     public void testValidateWithConstraintViolations() throws Exception {
 
-        Set<ConstraintViolation<TestConfig>> constraintViolations = Sets.newHashSet(constraintViolation1, constraintViolation2);
+        Set<ConstraintViolation<TestConfig>> constraintViolations = SetHelper.newHashSet(constraintViolation1, constraintViolation2);
 
         when(validator.validate(testConfig)).thenReturn(constraintViolations);
         when(errorMessageSetup.getErrorMessage(Matchers.any(Class.class))).thenReturn("Validation found the following constraint violations:");
@@ -79,7 +78,7 @@ public class ConfigValidatorTest {
         when(errorMessageSetup.getErrorMessage(Matchers.any(Throwable.class))).thenReturn("InvocationTargetException");
         expectedException.expect(ValidatorException.class);
         expectedException.expectMessage("InvocationTargetException");
-        when(annotationHelper.getMethodsAnnotatedWith(TestConfig.class, Validation.class)).thenReturn(Sets.newHashSet(TestConfig.class.getDeclaredMethod("validate")));
+        when(annotationHelper.getMethodsAnnotatedWith(TestConfig.class, Validation.class)).thenReturn(SetHelper.newHashSet(TestConfig.class.getDeclaredMethod("validate")));
         configValidator.validate(new TestConfig());
         verify(annotationHelper).getMethodsAnnotatedWith(TestConfig.class, Validation.class);
     }
@@ -87,7 +86,7 @@ public class ConfigValidatorTest {
     @Test
     public void testValidateWithoutConstraintViolations() throws Exception {
 
-        Set<ConstraintViolation<TestConfig>> constraintViolations = Sets.newHashSet();
+        Set<ConstraintViolation<TestConfig>> constraintViolations = SetHelper.newHashSet();
         when(validator.validate(testConfig)).thenReturn(constraintViolations);
 
         configValidator.validate(testConfig);

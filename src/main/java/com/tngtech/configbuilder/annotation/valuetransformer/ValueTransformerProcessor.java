@@ -11,10 +11,10 @@ import java.lang.annotation.Annotation;
 public class ValueTransformerProcessor implements IValueTransformerProcessor<Object> {
 
     public Object transformString(Annotation annotation, String fieldString) {
-        Class<? extends FieldValueProvider> valueProvidingClass = ((ValueTransformer) annotation).value();
+        Class<? extends FieldValueProvider<?>> valueProvidingClass = ((ValueTransformer) annotation).value();
         try {
             return valueProvidingClass.newInstance().getValue(fieldString);
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (Exception e) {
             throw new ValueTransformerException(e);
         }
     }

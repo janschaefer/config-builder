@@ -1,6 +1,5 @@
 package com.tngtech.configbuilder;
 
-import com.google.common.collect.Lists;
 import com.tngtech.configbuilder.annotation.configuration.LoadingOrder;
 import com.tngtech.configbuilder.configuration.BuilderConfiguration;
 import com.tngtech.configbuilder.configuration.ErrorMessageSetup;
@@ -8,6 +7,7 @@ import com.tngtech.configbuilder.util.ConfigBuilderFactory;
 import com.tngtech.configbuilder.testclasses.TestConfig;
 import com.tngtech.configbuilder.util.*;
 import com.tngtech.propertyloader.PropertyLoader;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.junit.After;
@@ -20,6 +20,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -78,7 +79,7 @@ public class ConfigBuilderTest {
         when(propertyLoaderConfigurator.configurePropertyLoader(TestConfig.class)).thenReturn(propertyLoader);
         when(commandLineHelper.getOptions(TestConfig.class)).thenReturn(commandLineOptions);
 
-        configBuilder = new ConfigBuilder<>(TestConfig.class, configBuilderFactory);
+        configBuilder = new ConfigBuilder<TestConfig>(TestConfig.class, configBuilderFactory);
     }
 
     @After
@@ -96,7 +97,7 @@ public class ConfigBuilderTest {
 
     @Test
     public void testOverridePropertiesFiles() throws Exception {
-        List<String> baseNames = Lists.newArrayList("file");
+        List<String> baseNames = Arrays.asList("file");
         configBuilder.overridePropertiesFiles(baseNames);
         verify(propertyLoader).withBaseNames(baseNames);
     }
